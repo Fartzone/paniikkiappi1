@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fi">
 <head>
@@ -25,9 +26,9 @@
     }
     #content {
       max-width: 90%;
-      font-size: 1rem;
+      font-size: 1.2rem;
       padding: 1rem;
-      margin-top: 80px;
+      margin-top: 120px;
       background: rgba(255, 255, 255, 0.85);
       border-radius: 16px;
       box-shadow: 0 0 20px rgba(0,0,0,0.1);
@@ -92,7 +93,7 @@
       "Näytöllä näkyvä pallo voi auttaa sinua rauhoittumaan. Hengitä sen tahtiin – sisään kun se kasvaa, ulos kun se pienenee.",
       "Ahdistus on tunne joka sävyttää joskus meidän kaikkien elämää. Se ei ole vaarallista, mutta se voi tuntua joskus kurjalle.",
       "Mikä on tämänhetkisen ahdistuksesi voimakkuus asteikolla 1–10?",
-      "Ahdistus on kehon tapa kertoa, että jokin vaatii huomiota tai kaipaa muutosta.",
+      "Ahdistus on kehon tapa kertoa, että jokin on kesken, pielessä tai kaipaa huomiota.",
       "Mikä sinua juuri nyt huolettaa tai kuormittaa?",
       "Miltä sinusta tuntuu? Mitä tunteita huomaat?",
       "Vaikka ajatukset ja tunteet tuntuvat hankalilta, ne eivät ole vaarallisia. Ne ovat vain mielemme tuotoksia.",
@@ -108,7 +109,7 @@
       "Hengitä sisään nenän kautta. Onko ilmassa jokin tuoksu?",
       "Ajatukset ja tunteet ovat kuin aaltoja. Ne tulevat ja menevät.",
       "Voit keskittyä siihen, mikä on tärkeää. Pienikin askel riittää.",
-      "Kiitos, että pysähdyit. Nyt voit hetken vain hengitellä pallon tahdissa...",
+      "Kiitos, että pysähdyit. Nyt voit hetken vain hengitellä pallon tahdissa.",
       "",
       "Miltä sinusta nyt tuntuu?",
       "Mikä on ahdistuksesi voimakkuus nyt, asteikolla 1–10?",
@@ -154,7 +155,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function() {
-        navigator.serviceWorker.register('service-worker.js?v=2');
+        navigator.serviceWorker.register('service-worker.js');
       });
     }
   </script>
