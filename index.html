@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paniikkiäppi</title>
+  <style>
+    :root {
+      color-scheme: light;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Quicksand', 'Helvetica Neue', sans-serif;
+      background: linear-gradient(160deg, #d0e9f5, #eaf4fc, #d6f3f7);
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      transition: background 1s ease;
+    }
+    #content {
+      max-width: 90%;
+      font-size: 1.2rem;
+      padding: 1rem;
+      margin-top: 120px;
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeIn 1s forwards;
+    }
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    button {
+      margin-top: 2rem;
+      padding: 1rem 2.5rem;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #fdd9d9, #ffe6c7);
+      color: #333;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+    }
+    .breath-circle {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: -1;
+      width: 200px;
+      height: 200px;
+      margin: 30px auto;
+      background: radial-gradient(circle, #fce4ec, #f8bbd0);
+      border-radius: 50%;
+      box-shadow: 0 0 60px rgba(252, 228, 236, 0.6);
+      animation: breath 8s ease-in-out infinite;
+    }
+    @keyframes breath {
+      0% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.3); }
+      100% { transform: translate(-50%, -50%) scale(1); }
+    }
+  </style>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#edf4fb">
+</head>
+<body>
+  <h1 style="position: absolute; top: 20px; font-size: 1.8rem; font-weight: 600; color: #2a6478; text-shadow: 1px 1px 2px rgba(0,0,0,0.1);">Paniikkiäppi</h1>
+  <div class="breath-circle"></div>
+  <div id="content">Tervetuloa Paniikkiäppiin.<br> Paina aloittaaksesi rauhoittava hetki.</div>
+  <button id="nextBtn" onclick="showStep()">Aloita</button>
+
+  <script>
+    const steps = [
+      "Näytöllä näkyvä pallo voi auttaa sinua rauhoittumaan. Hengitä sen tahtiin – sisään kun se kasvaa, ulos kun se pienenee.",
+      "Ahdistus on tunne joka sävyttää joskus meidän kaikkien elämää. Se ei ole vaarallista, mutta se voi tuntua joskus kurjalle.",
+      "Mikä on tämänhetkisen ahdistuksesi voimakkuus asteikolla 1–10?",
+      "Ahdistus on kehon tapa kertoa, että jokin on kesken, pielessä tai kaipaa huomiota.",
+      "Mikä sinua juuri nyt huolettaa tai kuormittaa?",
+      "Miltä sinusta tuntuu? Mitä tunteita huomaat?",
+      "Vaikka ajatukset ja tunteet tuntuvat hankalilta, ne eivät ole vaarallisia. Ne ovat vain mielemme tuotoksia.",
+      "Niistä ei tarvitse päästä eroon, eikä niitä tarvitse voimistaa. Voi vain antaa niiden olla.",
+      "Seuraavaksi vien sinut läpi harjoituksen, jonka tehtävänä on rauhoittaa sinua ja auttaa sinua muistamaan, että et ole yhtä kuin sinun ajatukset tai tunteet.",
+      "Aloitetaan.",
+      "Aloitetaan kolmella rauhallisella hengityksellä. Hengitä sisään syvään nenän kautta ja puhalla ulos suun kautta.",
+      "Kokeile palleahengitystä: Aseta toinen käsi rinnan päälle ja toinen vatsalle. Hengitä niin, että vatsalla oleva käsi liikkuu, mutta rinnan päällä oleva käsi pysyy paikallaan.",
+      "Tunne jalkapohjasi. Miltä ne tuntuvat maata vasten?",
+      "Tunne selkäsi. Miltä tuntuu nojata penkkiin tai tuoliin?",
+      "Katso ympärillesi. Mikä on pienin yksityiskohta, jonka näet?",
+      "Kuuntele hetki. Mikä on hiljaisin ääni jonka kuulet juuri nyt?",
+      "Hengitä sisään nenän kautta. Onko ilmassa jokin tuoksu?",
+      "Ajatukset ja tunteet ovat kuin aaltoja. Ne tulevat ja menevät.",
+      "Voit keskittyä siihen, mikä on tärkeää. Pienikin askel riittää.",
+      "Kiitos, että pysähdyit. Nyt voit hetken vain hengitellä pallon tahdissa.",
+      "",
+      "Miltä sinusta nyt tuntuu?",
+      "Mikä on ahdistuksesi voimakkuus nyt, asteikolla 1–10?",
+      "Kiitos kun olit läsnä. Voit palata tähän hetkeen koska tahansa."
+    ];
+
+    let index = -1;
+    function showStep() {
+      index++;
+      const content = document.getElementById("content");
+      const btn = document.getElementById("nextBtn");
+      content.style.animation = 'none';
+      content.offsetHeight;
+      content.style.animation = null;
+      if (steps[index] === "Aloitetaan.") {
+        content.innerHTML = steps[index];
+        btn.style.display = "none";
+        setTimeout(() => {
+          index++;
+          content.innerHTML = steps[index];
+          btn.style.display = "inline-block";
+          btn.innerText = "Seuraava";
+        }, 5000);
+      } else if (index < steps.length - 1) {
+        content.innerHTML = steps[index];
+        btn.innerText = "Seuraava";
+      } else {
+        if (steps[index] === "") {
+          content.innerHTML = "<em>Hengitä rauhassa pallon tahdissa...</em>";
+          btn.style.display = "none";
+          setTimeout(() => {
+            index++;
+            content.innerHTML = steps[index];
+          }, 60000);
+        } else {
+          content.innerHTML = steps[index];
+          btn.style.display = "none";
+        }
+      }
+    }
+  </script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('service-worker.js');
+      });
+    }
+  </script>
+</body>
+</html>
